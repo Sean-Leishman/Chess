@@ -1,17 +1,23 @@
 import pygame
 import math
 import sys
-import copy
+import warnings
+
+warnings.filterwarnings(action='ignore',message="libpng warning: bKGD: invalid")
 
 pygame.init()
 
 WIDTH = 600
 HEIGHT = 600
 
+WHITE = (255,255,255)
+BLACK  = (0,0,0)
+
 COLOR = {
-    'WHITE': ['WHITE',(255,255,255)],
-    'BLACK': ['BLACK',(0,0,0)]
+    WHITE: ['WHITE',(255,255,255)],
+    BLACK: ['BLACK',(0,0,0)]
 }
+
 
 class Piece():
     def __init__(self,color,pos,type):
@@ -33,20 +39,19 @@ class Piece():
         return self.color
 
     def get_img(self):
-        return "Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png"
+        return pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
 
     def get_rect(self):
-        return (self.pos[0]*40,self.pos[1]*40,40,40)
+        return pygame.Rect(self.pos[0]*40,self.pos[1]*40,40,40)
 
     def move_pos(self,new_pos,board):
-        if new_pos in self.valid_moves:
-            for move in board:
-                if move.get_pos() == new_pos:
-                    board.remove(move)
-            self.pos = new_pos
-
-    def move_old_pos(self,new_pos,board):
+        if new_pos not in self.valid_moves:
+            return False
+        for move in board:
+            if move.get_pos() == new_pos:
+                board.remove(move)
         self.pos = new_pos
+        return True
 
     def is_valid(self,new_pos,board):
         if new_pos not in self.valid_moves:
@@ -59,16 +64,17 @@ class Piece():
         for i in self.moves:
             copy = self.pos[:]
             valid = True
+            once = True
             while i[0] + copy[0] >= 0 and i[0] + copy[0] < 8 and i[1] + copy[1] >= 0 and i[1] + copy[1] < 8 and valid:
+                if valid and not once:
+                    valid = False
                 for j in board:
-                    if [i[0] + copy[0],i[1]+copy[1]] == j.get_pos():
+                    if [i[0] + copy[0],i[1]+copy[1]] == j.get_pos() and once:
                         if j.get_color() == self.get_color():
-                            valid = False
-                        elif j.get_color() != None and j.get_color() != self.get_color():
-                            self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
                             valid = False
                         else:
                             valid = True
+                            once = False
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
                 copy = [copy[0] + i[0], copy[1] + i[1]]
@@ -100,16 +106,20 @@ class Pawn(Piece):
 
     def move_pos(self,new_pos,board):
         dist = self.get_distance(new_pos)
-        if new_pos in self.valid_moves:
-            for move in board:
-                if move.get_pos() == new_pos:
-                    board.remove(move)
-            self.pos = new_pos
+        if new_pos not in self.valid_moves:
+            return False
+        for move in board:
+            if move.get_pos() == new_pos:
+                board.remove(move)
+        self.pos = new_pos
+        return True
 
     def get_distance(self,new_pos):
-        distance = None
+        distance = 0
         if new_pos in self.valid_moves:
             distance = abs(new_pos[1] - self.pos[1])
+            print(distance)
+            print("!")
         return distance
 
     def find_valid(self,board):
@@ -123,7 +133,8 @@ class Pawn(Piece):
                 for j in board:
                     check_pos = j.get_pos()
                     if i[0] + copy[0] == check_pos[0] and i[1] + copy[1] == check_pos[1]:
-                        valid = False
+                        if self.get_color() == j.get_color():
+                            valid = False
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
         for i in self.check:
@@ -146,9 +157,6 @@ class Knight(Piece):
                 for j in board:
                     if [i[0] + copy[0], i[1] + copy[1]] == j.get_pos():
                         if j.get_color() == self.get_color():
-                            valid = False
-                        elif j.get_color() != None and j.get_color() != self.get_color():
-                            self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
                             valid = False
                         else:
                             valid = True
@@ -190,6 +198,7 @@ class King(Piece):
                         valid = False
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
+        return self.valid_moves
 
     def check_check(self,board):
         for i in board:
@@ -209,12 +218,8 @@ class Board():
         self.computer = computer
         self.set_pieces(type)
         self.in_check = {
-            'WHITE': False,
-            'BLACK': False
-        }
-        self.in_checkMate = {
-            'WHITE': False,
-            'BLACK': False
+            WHITE: False,
+            BLACK: False
         }
 
     def set_pieces(self,type):
@@ -227,10 +232,15 @@ class Board():
         return self.pieces
 
     def init_valid(self):
-        print("RRValid")
+        print("Valid")
         for i in self.pieces:
-            i.find_valid(self.pieces)
+            s = i.find_valid(self.pieces)
             print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
+
+    def get_valid_for_pos(self,pos):
+        for i in self.pieces:
+            if i.get_pos() == pos:
+                return i.valid_moves
 
     def get_valid(self,pos,new_pos,user):
         for i in self.pieces:
@@ -240,20 +250,22 @@ class Board():
                 else:
                     return False
 
-    def move_piece(self,pos,new_pos):
-        print("Move")
+    def get_piece_from_pos(self,pos):
+        for i in self.pieces:
+            if i.get_pos == pos:
+                return i
+        return None
+
+    def move_piece(self,pos,new_pos,real=False):
+        moved = False
         for i in self.pieces:
             if i.get_pos() == pos:
-                i.move_pos(new_pos,self.get_pieces())
+                if (new_pos != pos):
+                    moved = i.move_pos(new_pos,self.get_pieces())
+            elif i.get_pos() == new_pos and real:
+                i.moved = True
             print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
-
-    def move_old_piece(self,pos,new_pos):
-        print("Move")
-        for i in self.pieces:
-            if i.get_pos() == pos:
-                i.move_old_pos(new_pos,self.get_pieces())
-            print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
-
+        return moved
 
     def get_selected(self,pos):
         for i in self.pieces:
@@ -270,19 +282,6 @@ class Board():
                 else:
                     self.in_check['BLACK'] = x.get_check()
 
-    def set_checkMate(self,color):
-        if self.get_check(color):
-            self.in_checkMate[color] = True
-            for x in self.pieces:
-                old_pos = x.get_pos()
-                for y in x.valid_moves:
-                    self.move_piece(old_pos,y)
-                    if not self.get_check(color):
-                        self.in_checkMate[color] = False
-                    self.move_old_piece(y,old_pos)
-
-
-
     def get_check(self,color):
         self.set_check()
         print("check:",self.in_check)
@@ -290,26 +289,23 @@ class Board():
         print(self.in_check[color])
         return self.in_check[color]
 
-    def get_check_mate(self,color):
-        self.set_checkMate(color)
-        print(color)
-        print(self.in_checkMate)
-        return self.in_checkMate[color]
-
-
 
 class Game():
     def __init__(self):
         pygame.init()
+        pygame.font.init()
+        self.font = pygame.font.SysFont('Comic Sans MS',30)
         self.user,self.computer = self.get_user()
-        self.turn = COLOR['WHITE']
+        self.turn = COLOR[WHITE]
         self.board = Board(self.user,self.computer,False)
         self.future_board = Board(self.user,self.computer,True)
         self.screen =  pygame.display.set_mode((WIDTH,HEIGHT))
         self.time = pygame.time.Clock()
+        self.selected = None
+        self.valid_moves = None
 
     def drawWindow(self):
-        self.screen.fill((255,255,255))
+        self.screen.fill(WHITE)
         pieces = self.board.get_pieces()
         for i in range(8):
             for j in range(8):
@@ -317,28 +313,32 @@ class Game():
                     pygame.draw.rect(self.screen,(153, 102, 51),(i*40,j*40,40,40))
                 else:
                     pygame.draw.rect(self.screen, (255, 204, 153), (i * 40, j * 40, 40, 40))
+
+        if self.selected != None:
+            pygame.draw.rect(self.screen,(255,0,0),(self.selected[0]*40,self.selected[1]*40,40,40),2)
+        if self.valid_moves != None:
+            print(self.valid_moves)
+            for move in self.valid_moves:
+                pygame.draw.rect(self.screen, (0, 255, 0), (move[0] * 40, move[1] * 40, 40, 40), 2)
         for i in pieces:
-            self.screen.blit(pygame.image.load(i.get_img()),pygame.Rect(i.get_rect()))
+            self.screen.blit(i.get_img(), i.get_rect())
+
+        text_surface = self.font.render(self.turn[0], False, (0, 0, 0))
+        self.screen.blit(text_surface,(400,0))
         pygame.display.update()
 
 
     def get_user(self):
-        return COLOR['BLACK'],COLOR['WHITE']
+        return COLOR[BLACK],COLOR[WHITE]
 
     def switch_turn(self):
-        if self.turn == COLOR['WHITE']:
-            self.turn = COLOR['BLACK']
+        if self.turn == COLOR[WHITE]:
+            self.turn = COLOR[BLACK]
         else:
-            self.turn = COLOR['WHITE']
+            self.turn = COLOR[WHITE]
 
     def get_turn(self):
         return self.turn
-
-    def get_oppTurn(self):
-        if self.turn == COLOR['WHITE']:
-            return COLOR['BLACK']
-        else:
-            return COLOR['WHITE']
 
     def move_piece(self):
         pass
@@ -348,7 +348,6 @@ class Game():
         for i in range(len(pos)):
             cord[i] = math.floor(pos[i]/40)
         return cord
-
 
     def main(self):
         self.drawWindow()
@@ -360,40 +359,29 @@ class Game():
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    print('board')
                     self.board.init_valid()
-                    print('futureboard')
                     self.future_board.init_valid()
                     if not selected:
                         cord = self.get_cord(pos)
                         select = self.board.get_selected(cord)
+                        print(select)
                         if select != None and select.color == self.turn:
+                            self.selected = cord
+                            self.valid_moves = self.board.get_valid_for_pos(cord)
+                            print(self.valid_moves)
                             selected = True
                     else:
                         new_cord = self.get_cord(pos)
-                        print('futureboard')
-                        self.future_board.move_piece(cord,new_cord)
-                        self.future_board.init_valid()
+                        moved = self.future_board.move_piece(cord,new_cord)
                         future_check = self.future_board.get_check(self.get_turn()[0])
-                        print("run2",self.board.get_valid(cord,new_cord,self.get_turn()[0]))
-                        print("run3",future_check)
-                        print('run4',self.get_turn())
-                        if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and not future_check:
-                            print("run")
-                            self.board.move_piece(cord,new_cord)
+                        if not self.board.get_valid(cord,new_cord,self.get_turn()[0]) and not future_check and moved:
+                            self.board.move_piece(cord,new_cord,real=True)
                             self.switch_turn()
-                            if self.future_board.get_check_mate(self.get_turn()[0]):
-                                print('Break')
-                                break
-                        else:
-                            self.future_board.pieces = copy.deepcopy(self.board.pieces)
-                            self.future_board.in_check = copy.deepcopy(self.board.in_check)
                         selected = False
-                    # Check for checkmate
-
-
-
-                self.drawWindow()
+                        self.selected = None
+                        self.valid_moves = None
+                    self.future_board.pieces = self.board.pieces
+                    self.drawWindow()
             self.time.tick(60)
 
 
