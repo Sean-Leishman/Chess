@@ -8,8 +8,10 @@ warnings.filterwarnings(action='ignore',message="libpng warning: bKGD: invalid")
 
 pygame.init()
 
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 800
+HEIGHT = 800
+
+SQUARE_SIZE = 100
 
 WHITE = (255,255,255)
 BLACK  = (0,0,0)
@@ -44,10 +46,12 @@ class Piece():
         return self.color
 
     def get_img(self):
-        return pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
+        img = pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
+        img = pygame.transform.scale(img, (SQUARE_SIZE,SQUARE_SIZE))
+        return img
 
     def get_rect(self):
-        return pygame.Rect(self.pos[0]*40,self.pos[1]*40,40,40)
+        return pygame.Rect(self.pos[0]*SQUARE_SIZE,self.pos[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE)
 
     def move_pos(self,new_pos,board):
         piece = None
@@ -410,17 +414,17 @@ class Game():
         for i in range(8):
             for j in range(8):
                 if i % 2 == 0 and j % 2 == 0 or i % 2 == 1 and j % 2 ==1:
-                    pygame.draw.rect(self.screen,(153, 102, 51),(i*40,j*40,40,40))
+                    pygame.draw.rect(self.screen,(153, 102, 51),(i*SQUARE_SIZE,j*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE))
                 else:
-                    pygame.draw.rect(self.screen, (255, 204, 153), (i * 40, j * 40, 40, 40))
+                    pygame.draw.rect(self.screen, (255, 204, 153), (i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
         if self.selected != None:
-            pygame.draw.rect(self.screen,(255,0,0),(self.selected[0]*40,self.selected[1]*40,40,40),2)
+            pygame.draw.rect(self.screen,(255,0,0),(self.selected[0]*SQUARE_SIZE,self.selected[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE),2)
         if self.valid_moves != None:
             for move in self.valid_moves:
-                pygame.draw.rect(self.screen, (0, 255, 0), (move[0] * 40, move[1] * 40, 40, 40), 2)
+                pygame.draw.rect(self.screen, (0, 255, 0), (move[0] * SQUARE_SIZE, move[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE), 2)
         if self.in_check != None:
-            pygame.draw.rect(self.screen, (255, 0, 0), (self.in_check[0] * 40, self.in_check[1] * 40, 40, 40), 2)
+            pygame.draw.rect(self.screen, (255, 0, 0), (self.in_check[0] * SQUARE_SIZE, self.in_check[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE), 2)
         for i in pieces:
             self.screen.blit(i.get_img(), i.get_rect())
             if (isinstance(i, King)):
@@ -451,7 +455,7 @@ class Game():
     def get_cord(self,pos):
         cord = [0] * 2
         for i in range(len(pos)):
-            cord[i] = math.floor(pos[i]/40)
+            cord[i] = math.floor(pos[i]/SQUARE_SIZE)
         return cord
 
     def main(self):
