@@ -3,6 +3,7 @@ import math
 import sys
 import warnings
 from copy import deepcopy
+import pygame_menu
 
 warnings.filterwarnings(action='ignore',message="libpng warning: bKGD: invalid")
 
@@ -10,6 +11,8 @@ pygame.init()
 
 WIDTH = 600
 HEIGHT = 600
+
+SQUARE_SIZE = WIDTH / 8
 
 WHITE = (255,255,255)
 BLACK  = (0,0,0)
@@ -44,10 +47,12 @@ class Piece():
         return self.color
 
     def get_img(self):
-        return pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
+        img = pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
+        img = pygame.transform.scale(img, (SQUARE_SIZE,SQUARE_SIZE))
+        return img
 
     def get_rect(self):
-        return pygame.Rect(self.pos[0]*40,self.pos[1]*40,40,40)
+        return pygame.Rect(self.pos[0]*SQUARE_SIZE,self.pos[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE)
 
     def move_pos(self,new_pos,board):
         piece = None
@@ -278,7 +283,7 @@ class Board():
         self.pieces = [Castle(self.user,[0,0],type),Knight(self.user,[1,0],type),Bishop(self.user,[2,0],type),Queen(self.user,[3,0],type),King(self.user,[4,0],type),Bishop(self.user,[5,0],type),Knight(self.user,[6,0],type),Castle(self.user,[7,0],type),
                        Pawn(self.user,[0,1],1,type),Pawn(self.user,[1,1],1,type),Pawn(self.user,[2,1],1,type),Pawn(self.user,[3,1],1,type),Pawn(self.user,[4,1],1,type),Pawn(self.user,[5,1],1,type),Pawn(self.user,[6,1],1,type),Pawn(self.user,[7,1],1,type),
                        Pawn(self.computer,[0,6],-1,type),Pawn(self.computer,[1,6],-1,type),Pawn(self.computer,[2,6],-1,type),Pawn(self.computer,[3,6],-1,type),Pawn(self.computer,[4,6],-1,type),Pawn(self.computer,[5,6],-1,type),Pawn(self.computer,[6,6],-1,type),Pawn(self.computer,[7,6],-1,type),
-                       Castle(self.computer,[0,7],type),Knight(self.computer,[1,7],type),Bishop(self.computer,[2,7],type),Queen(self.computer,[7,4],type),King(self.computer,[4,7],type),Bishop(self.computer,[5,7],type),Knight(self.computer,[6,7],type),Castle(self.computer,[7,7],type)]
+                       Castle(self.computer,[0,7],type),Knight(self.computer,[1,7],type),Bishop(self.computer,[2,7],type),Queen(self.computer,[5,5],type),King(self.computer,[4,7],type),Bishop(self.computer,[2,4],type),Knight(self.computer,[6,7],type),Castle(self.computer,[7,7],type)]
 
     def get_pieces(self):
         return self.pieces
@@ -319,9 +324,6 @@ class Board():
                                     print("Remove: ", i, i.pos, move, i.valid_moves)
                         #piece.valid_moves.remove(move)
                 print(piece, piece.pos, valid_moves)
-
-
-
 
     def get_valid_for_pos(self,pos):
         for i in self.pieces:
@@ -388,6 +390,18 @@ class Board():
     def get_check(self,color):
         return self.in_check[color]
 
+    # No Mate - 0, Stalemate - 1, Checkmate - 2
+    def check_mates(self,color):
+        for i in self.pieces:
+            if i.color[0] == color:
+                if len(i.valid_moves) > 0:
+                    return 0
+        if self.in_check[color]:
+            return 2
+        else:
+            return 1
+
+
 
 class Game():
     def __init__(self):
@@ -403,6 +417,7 @@ class Game():
         self.selected = None
         self.valid_moves = None
         self.in_check = None
+        self.game_state = 0
 
     def drawWindow(self):
         self.screen.fill(WHITE)
@@ -410,17 +425,17 @@ class Game():
         for i in range(8):
             for j in range(8):
                 if i % 2 == 0 and j % 2 == 0 or i % 2 == 1 and j % 2 ==1:
-                    pygame.draw.rect(self.screen,(153, 102, 51),(i*40,j*40,40,40))
+                    pygame.draw.rect(self.screen,(153, 102, 51),(i*SQUARE_SIZE,j*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE))
                 else:
-                    pygame.draw.rect(self.screen, (255, 204, 153), (i * 40, j * 40, 40, 40))
+                    pygame.draw.rect(self.screen, (255, 204, 153), (i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
         if self.selected != None:
-            pygame.draw.rect(self.screen,(255,0,0),(self.selected[0]*40,self.selected[1]*40,40,40),2)
+            pygame.draw.rect(self.screen,(255,0,0),(self.selected[0]*SQUARE_SIZE,self.selected[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE),2)
         if self.valid_moves != None:
             for move in self.valid_moves:
-                pygame.draw.rect(self.screen, (0, 255, 0), (move[0] * 40, move[1] * 40, 40, 40), 2)
+                pygame.draw.rect(self.screen, (0, 255, 0), (move[0] * SQUARE_SIZE, move[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE), 2)
         if self.in_check != None:
-            pygame.draw.rect(self.screen, (255, 0, 0), (self.in_check[0] * 40, self.in_check[1] * 40, 40, 40), 2)
+            pygame.draw.rect(self.screen, (255, 0, 0), (self.in_check[0] * SQUARE_SIZE, self.in_check[1] * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE), 2)
         for i in pieces:
             self.screen.blit(i.get_img(), i.get_rect())
             if (isinstance(i, King)):
@@ -430,6 +445,14 @@ class Game():
 
         text_surface = self.font.render(self.turn[0], False, (0, 0, 0))
         self.screen.blit(text_surface,(400,0))
+
+        if (self.game_state == 1):
+            text_surface = self.font.render("Stalemate", False, (0, 0, 0))
+            self.screen.blit(text_surface, (400, 200))
+        if (self.game_state == 2):
+            text_surface = self.font.render(str("Checkmate. " + self.turn[0] + " wins"), False, (0, 0, 0))
+            self.screen.blit(text_surface, (400, 200))
+
         pygame.display.update()
 
 
@@ -451,12 +474,14 @@ class Game():
     def get_cord(self,pos):
         cord = [0] * 2
         for i in range(len(pos)):
-            cord[i] = math.floor(pos[i]/40)
+            cord[i] = math.floor(pos[i]/SQUARE_SIZE)
         return cord
 
     def main(self):
         self.drawWindow()
         selected = False
+        self.board.init_valid(self.get_turn()[0])
+        self.future_board.init_valid(self.get_turn()[0], True)
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -485,13 +510,16 @@ class Game():
                             #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
                             self.board.init_valid(self.get_turn()[0], True)
                             self.switch_turn()
+                            self.board.init_valid(self.get_turn()[0], False)
                             print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
+                            self.game_state = self.board.check_mates(self.get_turn()[0])
                         selected = False
                         self.selected = None
                         self.valid_moves = None
                     self.future_board.pieces = deepcopy(self.board.pieces)
                     self.drawWindow()
             self.time.tick(60)
+        self.drawWindow()
 
 
 
