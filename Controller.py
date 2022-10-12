@@ -25,7 +25,9 @@ class Controller():
         self.time = pygame.time.Clock()
         self.state = -1
         self.start_menu = StartMenu()
-        self.game = Game(self.screen, self.time, self.font)
+
+        self.color_selected = None
+        self.opponent_selected = None
 
     def main(self):
         winner = None
@@ -41,6 +43,9 @@ class Controller():
                 if not self.start_menu.start_menu_state:
                     self.state = 1
                     self.start_menu.start_menu_state = True
+
+                    self.color_selected = self.start_menu.color
+                    self.opponent_selected = self.start_menu.opponent
             elif self.state == 0:
                 self.restart_menu.winner = winner
                 self.restart_menu.main(events, self.screen)
@@ -48,8 +53,12 @@ class Controller():
                 if not self.restart_menu.start_menu_state:
                     self.state = 1
                     self.restart_menu.start_menu_state = True
+
+                    self.color_selected = self.restart_menu.color
+                    self.opponent_selected = self.restart_menu.opponent
             elif self.state == 1:
-                self.game = Game(self.screen, self.time, self.font)
+                self.game = Game(self.screen, self.time, self.font
+                                 , self.color_selected, self.opponent_selected)
                 break
         self.game.main()
         self.game.switch_turn()
