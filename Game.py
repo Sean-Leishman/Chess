@@ -8,6 +8,14 @@ import chess
 import io
 import svgutils
 
+from stockfish import Stockfish
+from os import path
+from pathlib import Path
+path = 'C:\\Users\\leish\\stockfish\\stockfish_20090216_x64'
+
+stockfish = Stockfish(path=path)
+
+
 warnings.filterwarnings(action='ignore',message="libpng warning: bKGD: invalid")
 
 pygame.init()
@@ -321,6 +329,7 @@ class Board():
             "WHITE": False,
             "BLACK": False
         }
+        self.history = []
 
     def set_pieces(self,type):
         if (self.user[0] == 'WHITE'):
@@ -415,6 +424,8 @@ class Board():
                     if real:
                         if (isinstance(i, Pawn)):
                             i.define_moves()
+                        # TODO -> Add history of moves to be read by stockfish
+                        self.history.append()
             #print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
         return moved, piece
 
@@ -560,37 +571,41 @@ class Game():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    self.board.init_valid(self.get_turn()[0])
-                    self.future_board.init_valid(self.get_turn()[0], True)
-                    if not selected:
-                        cord = self.get_cord(pos)
-                        select = self.board.get_selected(cord)
-                        print(select)
-                        if select != None and select.color == self.turn:
-                            self.selected = cord
-                            self.valid_moves = self.board.get_valid_for_pos(cord)
-                            print("Valid Moves: ",self.valid_moves)
-                            selected = True
-                    else:
-                        new_cord = self.get_cord(pos)
-                        moved, piece = self.future_board.move_piece(cord,new_cord)
-                        future_check = self.future_board.get_set_check(self.get_turn()[0])
-                        print("Prior future check: ", future_check)
-                        if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and not future_check and moved:
-                            self.board.move_piece(cord,new_cord,real=True)
-                            #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
-                            self.board.init_valid(self.get_turn()[0], True)
-                            self.switch_turn()
-                            self.board.init_valid(self.get_turn()[0], False)
-                            print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
-                            self.game_state = self.board.check_mates(self.get_turn()[0])
-                        selected = False
-                        self.selected = None
-                        self.valid_moves = None
-                    self.future_board.pieces = deepcopy(self.board.pieces)
-                    self.drawWindow()
+                if self.opponent == 0 or self.user == self.turn:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        self.board.init_valid(self.get_turn()[0])
+                        self.future_board.init_valid(self.get_turn()[0], True)
+                        if not selected:
+                            cord = self.get_cord(pos)
+                            select = self.board.get_selected(cord)
+                            print(select)
+                            if select != None and select.color == self.turn:
+                                self.selected = cord
+                                self.valid_moves = self.board.get_valid_for_pos(cord)
+                                print("Valid Moves: ",self.valid_moves)
+                                selected = True
+                        else:
+                            new_cord = self.get_cord(pos)
+                            moved, piece = self.future_board.move_piece(cord,new_cord)
+                            future_check = self.future_board.get_set_check(self.get_turn()[0])
+                            print("Prior future check: ", future_check)
+                            if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and not future_check and moved:
+                                self.board.move_piece(cord,new_cord,real=True)
+                                #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
+                                self.board.init_valid(self.get_turn()[0], True)
+                                self.switch_turn()
+                                self.board.init_valid(self.get_turn()[0], False)
+                                print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
+                                self.game_state = self.board.check_mates(self.get_turn()[0])
+                            selected = False
+                            self.selected = None
+                            self.valid_moves = None
+                        self.future_board.pieces = deepcopy(self.board.pieces)
+                        self.drawWindow()
+                else:
+                    stockfish.make_moves_from_current_position([])
+                    stockfish.get_best_move()
             if (self.game_state != 0):
                 break
             self.time.tick(60)
