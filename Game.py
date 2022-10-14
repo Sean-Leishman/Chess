@@ -30,7 +30,7 @@ BLACK  = (0,0,0)
 
 COLOR = {
     WHITE: ['WHITE',(255,255,255)],
-    BLACK: ['BLACK',(0,0,0)]
+    BLACK : ['BLACK',(0,0,0)]
 }
 
 INITIALS = {
@@ -46,6 +46,25 @@ COLOR_INITIAL = {
     "WHITE":"l",
     "BLACK":"d"
 }
+
+white_letter_coord = ['a','b','c','d','e','f','g','h']
+
+def convert_pos_to_coord(pos, turn):
+    if turn == COLOR[WHITE]:
+        return str(white_letter_coord[pos[0]] + str(8 - pos[1]))
+    elif turn == COLOR[BLACK]:
+        return str(list(reversed(white_letter_coord))[pos[0]] + str(1 + pos[1]))
+
+def convert_coord_to_pos(coord,turn):
+    pos = coord[:2]
+    new_pos = coord[2:]
+    if turn == COLOR[WHITE]:
+        return str(white_letter_coord.index(pos[0])) + str(8 - int(pos[1])) \
+               ,str(white_letter_coord.index(new_pos[0])) + str(8 - int(new_pos[1]))
+    elif turn == COLOR[BLACK]:
+        return [list(reversed(white_letter_coord)).index(pos[0]),int(pos[1]) - 1] \
+                ,[list(reversed(white_letter_coord)).index(new_pos[0]),int(new_pos[1]) - 1]
+
 
 def load_and_scale_svg(filename, scale):
     svg_string = open(filename, "rt").read()
@@ -425,7 +444,9 @@ class Board():
                         if (isinstance(i, Pawn)):
                             i.define_moves()
                         # TODO -> Add history of moves to be read by stockfish
-                        self.history.append()
+                        move = convert_pos_to_coord(pos,self.user) + convert_pos_to_coord(new_pos, self.user)
+                        print("Move here ", move)
+                        self.history.append(move)
             #print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
         return moved, piece
 
@@ -604,8 +625,16 @@ class Game():
                         self.future_board.pieces = deepcopy(self.board.pieces)
                         self.drawWindow()
                 else:
-                    stockfish.make_moves_from_current_position([])
-                    stockfish.get_best_move()
+                    print("hist",self.board.history)
+                    if len(self.board.history) > 1:
+                        stockfish.make_moves_from_current_position(self.board.history[-2:])
+                    best_move = stockfish.get_best_move()
+                    coord, new_coord = convert_coord_to_pos(best_move, self.user)
+                    self.board.move_piece(coord, new_coord, real=True)
+                    self.board.init_valid(self.get_turn()[0], True)
+                    self.switch_turn()
+                    self.board.init_valid(self.get_turn()[0], False)
+                    self.drawWindow()
             if (self.game_state != 0):
                 break
             self.time.tick(60)
