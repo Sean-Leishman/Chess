@@ -4,6 +4,18 @@ import sys
 import warnings
 from copy import deepcopy
 import pygame_menu
+import chess
+import io
+import svgutils
+import random
+
+from stockfish import Stockfish
+from os import path
+from pathlib import Path
+path = 'C:\\Users\\leish\\stockfish\\stockfish_20090216_x64'
+
+stockfish = Stockfish(path=path)
+
 
 warnings.filterwarnings(action='ignore',message="libpng warning: bKGD: invalid")
 
@@ -19,8 +31,59 @@ BLACK  = (0,0,0)
 
 COLOR = {
     WHITE: ['WHITE',(255,255,255)],
-    BLACK: ['BLACK',(0,0,0)]
+    BLACK : ['BLACK',(0,0,0)]
 }
+
+INITIALS = {
+    "Pawn":"p",
+    "Queen":"q",
+    "King":"k",
+    "Bishop":"b",
+    "Knight":"n",
+    "Castle":"r",
+}
+
+COLOR_INITIAL = {
+    "WHITE":"l",
+    "BLACK":"d"
+}
+
+white_letter_coord = ['a','b','c','d','e','f','g','h']
+
+def convert_pos_to_coord(pos, turn):
+    if turn == COLOR[WHITE]:
+        return str(white_letter_coord[pos[0]] + str(8 - pos[1]))
+    elif turn == COLOR[BLACK]:
+        return str(list(reversed(white_letter_coord))[pos[0]] + str(1 + pos[1]))
+
+def convert_coord_to_pos(coord,turn):
+    pos = coord[:2]
+    new_pos = coord[2:]
+    if turn == COLOR[WHITE]:
+        return [white_letter_coord.index(pos[0]), 8 - int(pos[1])] \
+               ,[white_letter_coord.index(new_pos[0]), 8 - int(new_pos[1])]
+    elif turn == COLOR[BLACK]:
+        return [list(reversed(white_letter_coord)).index(pos[0]),int(pos[1]) - 1] \
+                ,[list(reversed(white_letter_coord)).index(new_pos[0]),int(new_pos[1]) - 1]
+
+
+def load_and_scale_svg(filename, scale):
+    svg_string = open(filename, "rt").read()
+    start = svg_string.find('<svg')
+    if start > 0:
+        svg_string = svg_string[:start+4] + f' transform="scale({scale})"' + svg_string[start+4:]
+
+    start = svg_string.find('<g style="')
+    if start > 0:
+        svg_string = svg_string[:start + 10] + f'overflow=visible; ' + svg_string[start + 10:]
+
+    svg = svgutils.compose.SVG(filename)
+    svg.scale(scale)
+    figure = svgutils.compose.Figure(float(svg.height) * 2, float(svg.width) * 2, svg)
+    figure.save('svgNew.svg')
+    svg_string = open('svgNew.svg', "rt").read()
+    print(svg_string)
+    return pygame.image.load(io.BytesIO(svg_string.encode()))
 
 
 class Piece():
@@ -29,8 +92,8 @@ class Piece():
         self.taken = False
         self.pos = pos
         if not copy:
-            self.img = self.get_img()
-            self.rect = self.get_rect()
+            self.img = self.load_img()
+            self.rect = self.load_rect()
         else:
             self.img = None
             self.rect = None
@@ -46,11 +109,19 @@ class Piece():
     def get_color(self):
         return self.color
 
-    def get_img(self):
-        img = pygame.image.load("Images\\"+str(self.color[0][0]) + str(self.__class__.__name__)+".png")
-        img = pygame.transform.scale(img, (SQUARE_SIZE,SQUARE_SIZE))
+    def load_img(self):
+        filename = "Images\\Chess_"+INITIALS[str(self.__class__.__name__)]+COLOR_INITIAL[self.color[0]]+"t45.svg"
+        #img = pygame.image.load(filename)
+        #img = pygame.transform.smoothscale(img, (SQUARE_SIZE,SQUARE_SIZE))
+        img = load_and_scale_svg(filename, SQUARE_SIZE/45)
         return img
 
+    def load_rect(self):
+        return pygame.Rect(self.pos[0]*SQUARE_SIZE,self.pos[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE)
+
+    def get_img(self):
+        return self.img
+    
     def get_rect(self):
         return pygame.Rect(self.pos[0]*SQUARE_SIZE,self.pos[1]*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE)
 
@@ -162,15 +233,15 @@ class Pawn(Piece):
                 for j in board:
                     check_pos = j.get_pos()
                     if i[0] + copy[0] == check_pos[0] and i[1] + copy[1] == check_pos[1]:
-                        if self.get_color() == j.get_color():
-                            valid = False
+                        valid = False
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
         for i in self.check:
             for j in board:
                 check_pos = j.get_pos()
                 if i[0] + self.pos[0] == check_pos[0] and i[1] + self.pos[1] == check_pos[1]:
-                    self.valid_moves.append([self.pos[0] + i[0], self.pos[1] + i[1]])
+                    if self.get_color() != j.get_color():
+                        self.valid_moves.append([self.pos[0] + i[0], self.pos[1] + i[1]])
 
 class Knight(Piece):
     def __init__(self, color, pos,type, copy=False):
@@ -278,13 +349,31 @@ class Board():
             "WHITE": False,
             "BLACK": False
         }
+        self.history = []
 
     def set_pieces(self,type):
-        self.pieces = [Castle(self.user,[0,0],type),Knight(self.user,[1,0],type),Bishop(self.user,[2,0],type),Queen(self.user,[3,0],type),King(self.user,[4,0],type),Bishop(self.user,[5,0],type),Knight(self.user,[6,0],type),Castle(self.user,[7,0],type),
-                       Pawn(self.user,[0,1],1,type),Pawn(self.user,[1,1],1,type),Pawn(self.user,[2,1],1,type),Pawn(self.user,[3,1],1,type),Pawn(self.user,[4,1],1,type),Pawn(self.user,[5,1],1,type),Pawn(self.user,[6,1],1,type),Pawn(self.user,[7,1],1,type),
-                       Pawn(self.computer,[0,6],-1,type),Pawn(self.computer,[1,6],-1,type),Pawn(self.computer,[2,6],-1,type),Pawn(self.computer,[3,6],-1,type),Pawn(self.computer,[4,6],-1,type),Pawn(self.computer,[5,6],-1,type),Pawn(self.computer,[6,6],-1,type),Pawn(self.computer,[7,6],-1,type),
-                       Castle(self.computer,[0,7],type),Knight(self.computer,[1,7],type),Bishop(self.computer,[2,7],type),Queen(self.computer,[5,5],type),King(self.computer,[4,7],type),Bishop(self.computer,[2,4],type),Knight(self.computer,[6,7],type),Castle(self.computer,[7,7],type)]
-
+        if (self.user[0] == 'WHITE'):
+            self.pieces = [Castle(self.computer,[0,0],type),Knight(self.computer,[1,0],type),Bishop(self.computer,[2,0],type),Queen(self.computer,[3,0],type),King(self.computer,[4,0],type),Bishop(self.computer,[5,0],type),Knight(self.computer,[6,0],type),Castle(self.computer,[7,0],type),
+                           Pawn(self.computer,[0,1],1,type),Pawn(self.computer,[1,1],1,type),Pawn(self.computer,[2,1],1,type),Pawn(self.computer,[3,1],1,type),Pawn(self.computer,[4,1],1,type),Pawn(self.computer,[5,1],1,type),Pawn(self.computer,[6,1],1,type),Pawn(self.computer,[7,1],1,type),
+                           Pawn(self.user,[0,6],-1,type),Pawn(self.user,[1,6],-1,type),Pawn(self.user,[2,6],-1,type),Pawn(self.user,[3,6],-1,type),Pawn(self.user,[4,6],-1,type),Pawn(self.user,[5,6],-1,type),Pawn(self.user,[6,6],-1,type),Pawn(self.user,[7,6],-1,type),
+                           Castle(self.user,[0,7],type),Knight(self.user,[1,7],type),Bishop(self.user,[2,7],type),Queen(self.user,[3,7],type),King(self.user,[4,7],type),Bishop(self.user,[5,7],type),Knight(self.user,[6,7],type),Castle(self.user,[7,7],type)]
+        elif self.user[0] == 'BLACK':
+            self.pieces = [Castle(self.computer, [0, 0], type), Knight(self.computer, [1, 0], type),
+                           Bishop(self.computer, [2, 0], type), Queen(self.computer, [4, 0], type),
+                           King(self.computer, [3, 0], type), Bishop(self.computer, [5, 0], type),
+                           Knight(self.computer, [6, 0], type), Castle(self.computer, [7, 0], type),
+                           Pawn(self.computer, [0, 1], 1, type), Pawn(self.computer, [1, 1], 1, type),
+                           Pawn(self.computer, [2, 1], 1, type), Pawn(self.computer, [3, 1], 1, type),
+                           Pawn(self.computer, [4, 1], 1, type), Pawn(self.computer, [5, 1], 1, type),
+                           Pawn(self.computer, [6, 1], 1, type), Pawn(self.computer, [7, 1], 1, type),
+                           Pawn(self.user, [0, 6], -1, type), Pawn(self.user, [1, 6], -1, type),
+                           Pawn(self.user, [2, 6], -1, type), Pawn(self.user, [3, 6], -1, type),
+                           Pawn(self.user, [4, 6], -1, type), Pawn(self.user, [5, 6], -1, type),
+                           Pawn(self.user, [6, 6], -1, type), Pawn(self.user, [7, 6], -1, type),
+                           Castle(self.user, [0, 7], type), Knight(self.user, [1, 7], type),
+                           Bishop(self.user, [2, 7], type), Queen(self.user, [4, 7], type),
+                           King(self.user, [3, 7], type), Bishop(self.user, [5, 7], type),
+                           Knight(self.user, [6, 7], type), Castle(self.user, [7, 7], type)]
     def get_pieces(self):
         return self.pieces
 
@@ -312,12 +401,12 @@ class Board():
                         print("Here")
                     if removed_piece:
                         print("Here2")
-                    #copy_board.init_valid(color, True)
+                    copy_board.init_valid(color, True)
                     future_check = copy_board.get_set_check(color)
                     copy_board.reverse_move(move, original_pos, removed_piece)
+                    copy_board.init_valid(color, True)
                     if future_check:
                         for i in self.pieces:
-
                             if i.__class__.__name__ == piece.__class__.__name__ and i.color == piece.color:
                                 if (move in i.valid_moves):
                                     i.valid_moves.remove(move)
@@ -351,8 +440,14 @@ class Board():
             if i.get_pos() == pos:
                 if (new_pos != pos):
                     moved, piece = i.move_pos(new_pos,self.get_pieces())
-            elif i.get_pos() == new_pos and real:
-                i.moved = True
+                    i.moved = True
+                    if real:
+                        if (isinstance(i, Pawn)):
+                            i.define_moves()
+                        # TODO -> Add history of moves to be read by stockfish
+                        move = convert_pos_to_coord(pos,self.user) + convert_pos_to_coord(new_pos, self.user)
+                        print("Move here ", move)
+                        self.history.append(move)
             #print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
         return moved, piece
 
@@ -404,24 +499,28 @@ class Board():
 
 
 class Game():
-    def __init__(self):
-        pygame.init()
-        pygame.font.init()
-        self.font = pygame.font.SysFont('Comic Sans MS',30)
-        self.user,self.computer = self.get_user()
+    def __init__(self,screen, time, font, color=0, opponent=0):
+        self.color = color
+        self.opponent = opponent
+        self.user,self.computer = self.get_user(self.color, self.opponent)
         self.turn = COLOR[WHITE]
         self.board = Board(self.user,self.computer,False)
         self.future_board = deepcopy(self.board)
-        self.screen =  pygame.display.set_mode((WIDTH,HEIGHT))
-        self.time = pygame.time.Clock()
+        self.screen = screen
+        self.time = time
+        self.font = font
         self.selected = None
         self.valid_moves = None
         self.in_check = None
         self.game_state = 0
 
+    def drawStartWindow(self):
+        pygame.display.update()
+
     def drawWindow(self):
         self.screen.fill(WHITE)
         pieces = self.board.get_pieces()
+
         for i in range(8):
             for j in range(8):
                 if i % 2 == 0 and j % 2 == 0 or i % 2 == 1 and j % 2 ==1:
@@ -456,8 +555,20 @@ class Game():
         pygame.display.update()
 
 
-    def get_user(self):
-        return COLOR[BLACK],COLOR[WHITE]
+    def get_user(self, color, opponent):
+        if opponent == 0:
+            return COLOR[WHITE],COLOR[BLACK]
+        elif opponent == 1:
+            if color == 0:
+                rand = random.randint(0,1)
+                if rand == 0:
+                    return COLOR[WHITE],COLOR[BLACK]
+                elif rand == 1:
+                    return COLOR[BLACK], COLOR[WHITE]
+            elif color == 1:
+                return COLOR[WHITE],COLOR[BLACK]
+            elif color == 2:
+                return COLOR[BLACK],COLOR[WHITE]
 
     def switch_turn(self):
         if self.turn == COLOR[WHITE]:
@@ -477,9 +588,10 @@ class Game():
             cord[i] = math.floor(pos[i]/SQUARE_SIZE)
         return cord
 
+
     def main(self):
-        self.drawWindow()
         selected = False
+        self.drawStartWindow()
         self.board.init_valid(self.get_turn()[0])
         self.future_board.init_valid(self.get_turn()[0], True)
         while True:
@@ -487,42 +599,56 @@ class Game():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    self.board.init_valid(self.get_turn()[0])
-                    self.future_board.init_valid(self.get_turn()[0], True)
-                    if not selected:
-                        cord = self.get_cord(pos)
-                        select = self.board.get_selected(cord)
-                        print(select)
-                        if select != None and select.color == self.turn:
-                            self.selected = cord
-                            self.valid_moves = self.board.get_valid_for_pos(cord)
-                            print("Valid Moves: ",self.valid_moves)
-                            selected = True
-                    else:
-                        new_cord = self.get_cord(pos)
-                        moved, piece = self.future_board.move_piece(cord,new_cord)
-                        future_check = self.future_board.get_set_check(self.get_turn()[0])
-                        print("Prior future check: ", future_check)
-                        if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and not future_check and moved:
-                            self.board.move_piece(cord,new_cord,real=True)
-                            #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
-                            self.board.init_valid(self.get_turn()[0], True)
-                            self.switch_turn()
-                            self.board.init_valid(self.get_turn()[0], False)
-                            print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
-                            self.game_state = self.board.check_mates(self.get_turn()[0])
-                        selected = False
-                        self.selected = None
-                        self.valid_moves = None
-                    self.future_board.pieces = deepcopy(self.board.pieces)
+                if self.opponent == 0 or self.user == self.turn:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        self.board.init_valid(self.get_turn()[0])
+                        self.future_board.init_valid(self.get_turn()[0], True)
+                        if not selected:
+                            cord = self.get_cord(pos)
+                            select = self.board.get_selected(cord)
+                            print(select)
+                            if select != None and select.color == self.turn:
+                                self.selected = cord
+                                self.valid_moves = self.board.get_valid_for_pos(cord)
+                                print("Valid Moves: ",self.valid_moves)
+                                selected = True
+                        else:
+                            new_cord = self.get_cord(pos)
+                            moved, piece = self.future_board.move_piece(cord,new_cord)
+                            if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and moved:
+                                self.board.move_piece(cord,new_cord,real=True)
+                                #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
+                                self.board.init_valid(self.get_turn()[0], True)
+                                self.switch_turn()
+                                self.board.init_valid(self.get_turn()[0], False)
+                                print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
+                                self.game_state = self.board.check_mates(self.get_turn()[0])
+                            selected = False
+                            self.selected = None
+                            self.valid_moves = None
+                        self.future_board.pieces = deepcopy(self.board.pieces)
+                        self.drawWindow()
+                else:
+                    print("hist",self.board.history)
+                    if len(self.board.history) > 1:
+                        stockfish.make_moves_from_current_position(self.board.history[-2:])
+                    elif len(self.board.history) > 0:
+                        stockfish.make_moves_from_current_position(self.board.history[-1:])
+                    best_move = stockfish.get_best_move()
+                    coord, new_coord = convert_coord_to_pos(best_move, self.user)
+                    self.board.move_piece(coord, new_coord, real=True)
+                    self.board.init_valid(self.get_turn()[0], True)
+                    self.switch_turn()
+                    self.board.init_valid(self.get_turn()[0], False)
+                    print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
+                    self.game_state = self.board.check_mates(self.get_turn()[0])
                     self.drawWindow()
+            if (self.game_state != 0):
+                break
             self.time.tick(60)
-        self.drawWindow()
-
 
 
 if __name__ == "__main__":
-    Game().main()
+    Game().start_menu()
 

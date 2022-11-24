@@ -10,15 +10,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="">
+    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="Fixed checkmate, stalemate functionality">
+      <change afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RestartMenu.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StartMenu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/MAIN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -35,10 +46,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
-  <component name="RunManager" selected="Python.MAIN">
-    <configuration name="MAIN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.Controller">
+    <configuration name="Controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -50,7 +61,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MAIN.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Controller.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Chess" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\leish\Projects\(9-9-2020)\Python\BettingBot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\leish\Projects\Python\Chess\Game.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -124,7 +156,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.MAIN" />
+        <item itemvalue="Python.Controller" />
+        <item itemvalue="Python.Game" />
       </list>
     </recent_temporary>
   </component>
@@ -137,6 +170,14 @@
       <option name="presentableId" value="Default" />
       <updated>1602715698898</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fixed checkmate, stalemate functionality">
+      <created>1665551046902</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665551046902</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,72 +192,86 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+    <MESSAGE value="Fixed checkmate, stalemate functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed checkmate, stalemate functionality" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="722" y="90" width="483" height="491" key="#xdebugger.XInspectDialog" timestamp="1665503699428">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state x="722" y="90" width="483" height="491" key="#xdebugger.XInspectDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503699428" />
-    <state x="421" y="92" key="FileChooserDialogImpl" timestamp="1661915029142">
+    <state x="421" y="92" key="FileChooserDialogImpl" timestamp="1665808673691">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
-    <state x="421" y="92" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1661915029142" />
-    <state width="1259" height="211" key="GridCell.Tab.0.bottom" timestamp="1665548945817">
+    <state x="421" y="92" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1665808673691" />
+    <state width="375" height="545" key="GridCell.Tab.0.bottom" timestamp="1669178516306">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="421" key="GridCell.Tab.0.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
-    <state width="1259" height="211" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1665548945817" />
-    <state width="1259" height="211" key="GridCell.Tab.0.center" timestamp="1665548945817">
+    <state width="375" height="545" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
+    <state width="375" height="545" key="GridCell.Tab.0.center" timestamp="1669178516306">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="421" key="GridCell.Tab.0.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
-    <state width="1259" height="211" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1665548945817" />
-    <state width="1259" height="211" key="GridCell.Tab.0.left" timestamp="1665548945817">
+    <state width="375" height="545" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
+    <state width="375" height="545" key="GridCell.Tab.0.left" timestamp="1669178516306">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="421" key="GridCell.Tab.0.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
-    <state width="1259" height="211" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1665548945817" />
-    <state width="1259" height="211" key="GridCell.Tab.0.right" timestamp="1665548945817">
+    <state width="375" height="545" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
+    <state width="375" height="545" key="GridCell.Tab.0.right" timestamp="1669178516306">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="421" key="GridCell.Tab.0.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
-    <state width="1259" height="211" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1665548945817" />
-    <state width="1259" height="90" key="GridCell.Tab.1.bottom" timestamp="1665548914244">
+    <state width="375" height="545" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
+    <state width="338" height="545" key="GridCell.Tab.1.bottom" timestamp="1669177862414">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="320" key="GridCell.Tab.1.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
-    <state width="1259" height="90" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1665548914244" />
-    <state width="1259" height="90" key="GridCell.Tab.1.center" timestamp="1665548914244">
+    <state width="338" height="545" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
+    <state width="338" height="545" key="GridCell.Tab.1.center" timestamp="1669177862412">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="320" key="GridCell.Tab.1.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
-    <state width="1259" height="90" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1665548914244" />
-    <state width="1259" height="90" key="GridCell.Tab.1.left" timestamp="1665548914244">
+    <state width="338" height="545" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
+    <state width="338" height="545" key="GridCell.Tab.1.left" timestamp="1669177862412">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="320" key="GridCell.Tab.1.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
-    <state width="1259" height="90" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1665548914244" />
-    <state width="1259" height="90" key="GridCell.Tab.1.right" timestamp="1665548914244">
+    <state width="338" height="545" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
+    <state width="338" height="545" key="GridCell.Tab.1.right" timestamp="1669177862414">
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state width="949" height="320" key="GridCell.Tab.1.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
-    <state width="1259" height="90" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1665548914244" />
+    <state width="338" height="545" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1669176919882">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.672@0.0.1280.672" timestamp="1669176919882" />
+    <state x="233" y="70" key="Vcs.Push.Dialog.v2" timestamp="1665551054234">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="233" y="70" key="Vcs.Push.Dialog.v2/0.0.1280.672@0.0.1280.672" timestamp="1665551054234" />
     <state x="2675" y="250" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1665503439235">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2675" y="250" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503439235" />
+    <state x="458" y="251" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1665551098744">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="458" y="251" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.672@0.0.1280.672" timestamp="1665551098744" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/MAIN.py</url>
-          <line>296</line>
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/MAIN.py</url>
-          <line>513</line>
-          <option name="timeStamp" value="93" />
+          <url>file://$PROJECT_DIR$/Game.py</url>
+          <line>616</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
