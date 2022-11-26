@@ -143,7 +143,7 @@ class Piece():
         self.pos = new_pos
 
     def is_valid(self,new_pos,board):
-        if new_pos not in self.valid_moves:
+        if new_pos not in [x[:2] for x in self.valid_moves]:
             return False
         else:
             return True
@@ -304,7 +304,10 @@ class King(Piece):
         super().__init__(color, pos,type, copy)
         self.moves = [[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[-1,1],[1,-1]]
         self.check = False
+
+        self.castle_moves = [[2,0],[-2,0]]
         self.castled = False
+        self.can_castle = True
 
     def __deepcopy__(self, memodict={}):
         piece = King(deepcopy(self.color), deepcopy(self.pos), deepcopy(self.future), True)
@@ -325,8 +328,59 @@ class King(Piece):
                         valid = False
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
+        if not self.castled and self.can_castle:
+            for i in self.castle_moves:
+                direction = i[0] // 2
+                start_idx = copy[0]+direction
+                if direction == -1:
+                    end_idx = 0
+                elif direction == 1:
+                    end_idx = 7
+                rook_pos = [end_idx, copy[1]]
+                valid = True
+                empty_positions = [[x, copy[1]] for x in range(start_idx, end_idx, direction)]
+                for j in board:
+                    if j.get_pos() in empty_positions:
+                        valid = False
+                    if j.get_pos() == rook_pos:
+                        if not isinstance(j, Castle):
+                            valid = False
+                if valid:
+                    self.valid_moves.append([copy[0] + i[0], copy[1], "CASTLING", rook_pos])
         return self.valid_moves
 
+    def move_pos(self, new_pos, board):
+        piece = None
+        if new_pos not in [x[:2] for x in self.valid_moves]:
+            return False, piece
+        try:
+            for i in self.valid_moves:
+                if i[0] == new_pos[0] and i[1] == new_pos[1]:
+                    status = i[2]
+                    rook_pos = i[3]
+        except IndexError:
+            status = "NOT CASTLE"
+        if status == "CASTLING":
+            self.pos = [new_pos[0], new_pos[1]]
+            for j in board:
+                if j.get_pos() == rook_pos:
+                    if rook_pos[0] == 0:
+                        direction = 1
+                    elif rook_pos[0] == 7:
+                        direction = -1
+                    j.pos = [self.pos[0] + direction, rook_pos[1]]
+            self.can_castle = False
+            self.castled = True
+        else:
+            for move in board:
+                if move.get_pos() == new_pos:
+                    piece = move
+                    board.remove(move)
+            self.pos = new_pos
+        return True, piece
+# 7 -> king_pos - 1 , 0 -> king_pos + 1
+
+# -1 -> 0, 1 -> 7
     def check_check(self,board):
         for i in board:
             if self.pos in i.valid_moves:
@@ -435,6 +489,7 @@ class Board():
                     if real:
                         if (isinstance(i, Pawn)):
                             i.define_moves()
+
                         # TODO -> Add history of moves to be read by stockfish
                         move = convert_pos_to_coord(pos,self.user) + convert_pos_to_coord(new_pos, self.user)
                         print("Move here ", move)
@@ -449,6 +504,19 @@ class Board():
                     i.make_move_pos(pos)
                     if i.__class__.__name__ == "Pawn":
                         i.moved = False
+                    if isinstance(i, King):
+                        try:
+                            if new_pos[2] == "CASTLING":
+                                i.castled = False
+                                i.can_castle = True
+                                for j in self.pieces:
+                                    if isinstance(j, Castle):
+                                        if j.get_pos()[0] == i.get_pos()[0] + 1:
+                                            j.make_move_pos([0,j.get_pos()[1]])
+                                        elif j.get_pos()[0] == i.get_pos()[0] - 1:
+                                            j.make_move_pos([7, j.get_pos()[1]])
+                        except:
+                            pass
                     if piece:
                         self.pieces.append(piece)
                     break
