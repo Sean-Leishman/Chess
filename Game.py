@@ -1,3 +1,6 @@
+# TODO - Fix castle while in check and castling into check
+# TODO - Check reverse move function performance
+
 import pygame
 import math
 import sys
@@ -342,8 +345,11 @@ class King(Piece):
                 1] < 8:
                 for j in board:
                     check_pos = j.get_pos()
-                    if i[0] + copy[0] == check_pos[0] and i[1] + copy[1] == check_pos[1]:
-                        valid = False
+                    if [i[0] + copy[0], i[1] + copy[1]] == j.get_pos():
+                        if j.get_color() == self.get_color():
+                            valid = False
+                        else:
+                            valid = True
                 if valid:
                     self.valid_moves.append([copy[0] + i[0], copy[1] + i[1]])
         if not self.castled and self.can_castle:
@@ -464,9 +470,34 @@ class Board():
         for piece in pieces:
             if piece.color[0] == color:
                 valid_moves = deepcopy(piece.valid_moves)
+                # 4,5,6
+                # 4,3,2
+                if isinstance(piece, King):
+                    bi_castling = [list(range(piece.pos[0],x[3][0], (x[0] - piece.pos[0])//abs(x[0] - piece.pos[0]))) for x in valid_moves if len(x) > 2]
+                    for idx,direction in enumerate(bi_castling):
+                        for position in direction:
+                            original_pos = deepcopy(piece.pos)
+                            copy_board.make_move_pos(original_pos, [position, original_pos[1]])
+                            copy_board.init_valid(color, True)
+                            future_check = copy_board.get_set_check(color)
+                            copy_board.make_move_pos([position, original_pos[1]], original_pos)
+                            copy_board.init_valid(color, True)
+                            if future_check:
+                                for i in self.pieces:
+                                    if i.__class__.__name__ == piece.__class__.__name__ and i.color == piece.color and i.pos == piece.pos:
+                                        castle_move = [x for x in valid_moves if len(x) > 2]
+                                        move = castle_move[idx]
+                                        for x in i.valid_moves:
+                                            if [x[0],x[1]] == move[:2]:
+                                                i.valid_moves.remove(move)
+
+
                 for move in valid_moves:
                     original_pos = deepcopy(piece.pos)
                     moved, removed_piece = copy_board.move_piece(piece.pos, move)
+                    if len(move) > 2:
+                        if move[2] == "CASTLING":
+                            status = move[2]
                     copy_board.init_valid(color, True)
                     future_check = copy_board.get_set_check(color)
                     copy_board.reverse_move(move, original_pos, removed_piece)
@@ -495,6 +526,11 @@ class Board():
             if i.get_pos == pos:
                 return i
         return None
+
+    def make_move_pos(self, pos, new_pos):
+        for i in self.pieces:
+            if i.get_pos() == pos:
+                i.pos = new_pos
 
     def move_piece(self,pos,new_pos,real=False):
         moved = False
