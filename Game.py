@@ -179,6 +179,7 @@ class Pawn(Piece):
         self.check = []
         self.valid_moves = []
         self.moved = False
+        self.en_passant = False
 
     def __deepcopy__(self, memodict={}):
         piece = Pawn(deepcopy(self.color),deepcopy(self.pos),deepcopy(self.direction),deepcopy(self.future),True)
@@ -205,13 +206,26 @@ class Pawn(Piece):
     def move_pos(self,new_pos,board):
         dist = self.get_distance(new_pos)
         piece = None
-        if new_pos not in self.valid_moves:
+        if new_pos not in [x[:2] for x in self.valid_moves]:
             return False, piece
+        else:
+            new_pos = [x for x in self.valid_moves if x[:2] == new_pos][0]
         for move in board:
-            if move.get_pos() == new_pos:
+            if move.get_pos() == new_pos[:2]:
                 board.remove(move)
                 piece = move
-        self.pos = new_pos
+            try:
+                if new_pos[2] == "EN PASSANT":
+                    if abs(move.get_pos()[1] - new_pos[1]) == 1 and move.get_pos()[0] == new_pos[0]:
+                        board.remove(move)
+
+            except:
+                pass
+
+        if abs(self.pos[1] - new_pos[1]) == 2 and not self.moved:
+            self.en_passant = True
+
+        self.pos = new_pos[:2]
         return True, piece
 
     def make_move_pos(self, new_pos):
@@ -243,6 +257,10 @@ class Pawn(Piece):
                 if i[0] + self.pos[0] == check_pos[0] and i[1] + self.pos[1] == check_pos[1]:
                     if self.get_color() != j.get_color():
                         self.valid_moves.append([self.pos[0] + i[0], self.pos[1] + i[1]])
+
+                if i[0] + self.pos[0] == check_pos[0] and self.pos[1] == check_pos[1] and isinstance(j, Pawn):
+                    if self.get_color() != j.get_color() and j.en_passant:
+                        self.valid_moves.append([self.pos[0] + i[0], self.pos[1] + i[1], "EN PASSANT", j.get_pos()[:]])
 
 class Knight(Piece):
     def __init__(self, color, pos,type, copy=False):
@@ -482,6 +500,8 @@ class Board():
         moved = False
         piece = None
         for i in self.pieces:
+            if isinstance(i, Pawn):
+                i.en_passant = False
             if i.get_pos() == pos:
                 if (new_pos != pos):
                     moved, piece = i.move_pos(new_pos,self.get_pieces())
@@ -740,12 +760,13 @@ class Game():
                             if select != None and select.color == self.turn:
                                 self.selected = cord
                                 self.valid_moves = self.board.get_valid_for_pos(cord)
+                                self.future_board.get_valid_for_pos(cord)
                                 print("Valid Moves: ",self.valid_moves)
                                 selected = True
                         else:
                             new_cord = self.get_cord(pos)
-                            moved, piece = self.future_board.move_piece(cord,new_cord)
-                            if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and moved:
+                            #moved, piece = self.future_board.move_piece(cord,new_cord)
+                            if self.board.get_valid(cord,new_cord,self.get_turn()[0]):
                                 self.board.move_piece(cord,new_cord,real=True)
                                 #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
                                 #self.board.init_valid(self.get_turn()[0], True)
