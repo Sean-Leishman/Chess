@@ -1,5 +1,4 @@
-# TODO - Fix castle while in check and castling into check
-# TODO - Check reverse move function performance
+# TODO - Check reverse move function performance.. change reverse to just save copy of old board? especially if en pessant
 
 import pygame
 import math
@@ -545,6 +544,10 @@ class Board():
                     if real:
                         if (isinstance(i, Pawn)):
                             i.define_moves()
+                        if i.get_pos()[1] % 7 == 0:
+                            self.pieces.remove(i)
+                            # (self.user, [4, 7], type)
+                            self.pieces.append(Queen(i.color, i.pos, False))
 
                         # TODO -> Add history of moves to be read by stockfish
                         move = convert_pos_to_coord(pos,self.user) + convert_pos_to_coord(new_pos, self.user)
