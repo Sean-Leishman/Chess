@@ -10,14 +10,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="Fixed checkmate, stalemate functionality">
-      <change afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RestartMenu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/StartMenu.py" afterDir="false" />
+    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="rebase">
+      <change afterPath="$PROJECT_DIR$/Model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Chess.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.Controller">
     <configuration name="Controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -62,6 +61,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Controller.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Game (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Chess" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\leish\Projects\(9-9-2020)\Python\BettingBot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Game.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -133,6 +153,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Chess" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\leish\Projects\(9-9-2020)\Python\BettingBot\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Chess" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -157,6 +198,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Controller" />
+        <item itemvalue="Python.Game (1)" />
+        <item itemvalue="Python.Model" />
         <item itemvalue="Python.Game" />
       </list>
     </recent_temporary>
@@ -208,49 +251,58 @@
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state x="421" y="92" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1665808673691" />
-    <state width="375" height="545" key="GridCell.Tab.0.bottom" timestamp="1669178516306">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="569" height="587" key="GridCell.Tab.0.bottom" timestamp="1669388714947">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="421" key="GridCell.Tab.0.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
+    <state width="569" height="587" key="GridCell.Tab.0.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669388714947" />
     <state width="375" height="545" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
-    <state width="375" height="545" key="GridCell.Tab.0.center" timestamp="1669178516306">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="569" height="587" key="GridCell.Tab.0.center" timestamp="1669388714947">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="421" key="GridCell.Tab.0.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
+    <state width="569" height="587" key="GridCell.Tab.0.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669388714947" />
     <state width="375" height="545" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
-    <state width="375" height="545" key="GridCell.Tab.0.left" timestamp="1669178516306">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="569" height="587" key="GridCell.Tab.0.left" timestamp="1669388714947">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="421" key="GridCell.Tab.0.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
+    <state width="569" height="587" key="GridCell.Tab.0.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669388714947" />
     <state width="375" height="545" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
-    <state width="375" height="545" key="GridCell.Tab.0.right" timestamp="1669178516306">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="569" height="587" key="GridCell.Tab.0.right" timestamp="1669388714947">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="421" key="GridCell.Tab.0.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503688642" />
+    <state width="569" height="587" key="GridCell.Tab.0.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669388714947" />
     <state width="375" height="545" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1669178516306" />
-    <state width="338" height="545" key="GridCell.Tab.1.bottom" timestamp="1669177862414">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="513" height="587" key="GridCell.Tab.1.bottom" timestamp="1669387624692">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="320" key="GridCell.Tab.1.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
+    <state width="513" height="587" key="GridCell.Tab.1.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669387624692" />
     <state width="338" height="545" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
-    <state width="338" height="545" key="GridCell.Tab.1.center" timestamp="1669177862412">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="513" height="587" key="GridCell.Tab.1.center" timestamp="1669387624692">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="320" key="GridCell.Tab.1.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
+    <state width="513" height="587" key="GridCell.Tab.1.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669387624692" />
     <state width="338" height="545" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
-    <state width="338" height="545" key="GridCell.Tab.1.left" timestamp="1669177862412">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="513" height="587" key="GridCell.Tab.1.left" timestamp="1669387624692">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="320" key="GridCell.Tab.1.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
+    <state width="513" height="587" key="GridCell.Tab.1.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669387624692" />
     <state width="338" height="545" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
-    <state width="338" height="545" key="GridCell.Tab.1.right" timestamp="1669177862414">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state width="513" height="587" key="GridCell.Tab.1.right" timestamp="1669387624692">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state width="949" height="320" key="GridCell.Tab.1.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503408351" />
+    <state width="513" height="587" key="GridCell.Tab.1.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669387624692" />
     <state width="338" height="545" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1669176919882">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state x="2734" y="69" width="1040" height="584" key="MergeDialog" timestamp="1669305234691">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
+    <state x="2734" y="69" width="1040" height="584" key="MergeDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669305234691" />
+    <state x="2518" y="277" key="MultipleFileMergeDialog" timestamp="1669305239294">
+      <screen x="1920" y="0" width="1920" height="1032" />
+    </state>
+    <state x="2518" y="277" key="MultipleFileMergeDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669305239294" />
+    <state x="2133" y="0" key="SettingsEditor" timestamp="1669386817455">
+      <screen x="1920" y="0" width="1920" height="1032" />
+    </state>
+    <state x="2133" y="0" key="SettingsEditor/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669386817455" />
     <state x="142" y="0" key="SettingsEditor/0.0.1280.672@0.0.1280.672" timestamp="1669176919882" />
     <state x="233" y="70" key="Vcs.Push.Dialog.v2" timestamp="1665551054234">
       <screen x="0" y="0" width="1280" height="672" />
@@ -270,8 +322,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Game.py</url>
-          <line>616</line>
-          <option name="timeStamp" value="4" />
+          <line>566</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

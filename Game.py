@@ -8,10 +8,13 @@ import chess
 import io
 import svgutils
 import random
-
+import numpy as np
 from stockfish import Stockfish
 from os import path
 from pathlib import Path
+
+from Model import Model
+
 path = 'C:\\Users\\leish\\stockfish\\stockfish_20090216_x64'
 
 stockfish = Stockfish(path=path)
@@ -218,8 +221,6 @@ class Pawn(Piece):
         distance = 0
         if new_pos in self.valid_moves:
             distance = abs(new_pos[1] - self.pos[1])
-            print(distance)
-            print("!")
         return distance
 
     def find_valid(self,board):
@@ -303,6 +304,7 @@ class King(Piece):
         super().__init__(color, pos,type, copy)
         self.moves = [[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[-1,1],[1,-1]]
         self.check = False
+        self.castled = False
 
     def __deepcopy__(self, memodict={}):
         piece = King(deepcopy(self.color), deepcopy(self.pos), deepcopy(self.future), True)
@@ -378,13 +380,10 @@ class Board():
         return self.pieces
 
     def init_valid(self,color, basic=False):
-        print("Valid")
         for i in self.pieces:
             s = i.find_valid(self.pieces)
         if not basic:
             self.validate_check(color)
-        print("Vals: ",[(i, i.pos, i.valid_moves) for i in self.pieces])
-        #print(i.__class__.__name__, i.get_color(), i.get_pos(), i.valid_moves)
 
     def validate_check(self,color):
         original_board = deepcopy(self)
@@ -393,26 +392,18 @@ class Board():
         for piece in pieces:
             if piece.color[0] == color:
                 valid_moves = deepcopy(piece.valid_moves)
-                print(piece, piece.pos,valid_moves)
                 for move in valid_moves:
                     original_pos = deepcopy(piece.pos)
                     moved, removed_piece = copy_board.move_piece(piece.pos, move)
-                    if (piece.__class__.__name__ == "Bishop"):
-                        print("Here")
-                    if removed_piece:
-                        print("Here2")
                     copy_board.init_valid(color, True)
                     future_check = copy_board.get_set_check(color)
                     copy_board.reverse_move(move, original_pos, removed_piece)
                     copy_board.init_valid(color, True)
                     if future_check:
                         for i in self.pieces:
-                            if i.__class__.__name__ == piece.__class__.__name__ and i.color == piece.color:
+                            if i.__class__.__name__ == piece.__class__.__name__ and i.color == piece.color and i.pos == piece.pos:
                                 if (move in i.valid_moves):
                                     i.valid_moves.remove(move)
-                                    print("Remove: ", i, i.pos, move, i.valid_moves)
-                        #piece.valid_moves.remove(move)
-                print(piece, piece.pos, valid_moves)
 
     def get_valid_for_pos(self,pos):
         for i in self.pieces:
@@ -456,6 +447,8 @@ class Board():
             if i.get_pos() == new_pos:
                 if (new_pos != pos):
                     i.make_move_pos(pos)
+                    if i.__class__.__name__ == "Pawn":
+                        i.moved = False
                     if piece:
                         self.pieces.append(piece)
                     break
@@ -477,13 +470,70 @@ class Board():
 
     def get_set_check(self,color):
         self.set_check()
-        print("check:",self.in_check)
-        print(color)
-        print(self.in_check[color])
         return self.in_check[color]
 
     def get_check(self,color):
         return self.in_check[color]
+
+    def get_all_possible_moves(self, color):
+        possible_boards = []
+        possible_moves = []
+        for i in self.pieces:
+            if i.color == color:
+                for j in i.valid_moves:
+                    pos = i.pos[:]
+                    new_pos = j[:]
+                    moved, piece = self.move_piece(pos, new_pos, False)
+                    possible_boards.append(self.convert_board_to_model_format())
+                    possible_moves.append([pos, new_pos])
+                    self.reverse_move(new_pos, pos, piece)
+
+        return possible_moves, np.array(possible_boards)
+
+    def convert_board_to_model_format(self):
+        pawn_board = np.zeros((8, 8))
+        rook_board = np.zeros((8, 8))
+        bishop_board = np.zeros((8, 8))
+        knight_board = np.zeros((8, 8))
+        queen_board = np.zeros((8, 8))
+        king_board = np.zeros((8, 8))
+
+        for i in self.pieces:
+            if isinstance(i, Pawn):
+                if i.color == COLOR[WHITE]:
+                    pawn_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    pawn_board[i.pos[1]][7-i.pos[0]] = -1
+            elif isinstance(i, Castle):
+                if i.color == COLOR[WHITE]:
+                    rook_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    rook_board[i.pos[1]][7-i.pos[0]] = -1
+            elif isinstance(i, Bishop):
+                if i.color == COLOR[WHITE]:
+                    bishop_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    bishop_board[i.pos[1]][7-i.pos[0]] = -1
+
+            elif isinstance(i, Knight):
+                if i.color == COLOR[WHITE]:
+                    knight_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    knight_board[i.pos[1]][7-i.pos[0]] = -1
+
+            elif isinstance(i, Queen):
+                if i.color == COLOR[WHITE]:
+                    queen_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    queen_board[i.pos[1]][7-i.pos[0]] = -1
+
+            elif isinstance(i, King):
+                if i.color == COLOR[WHITE]:
+                    king_board[i.pos[1]][7-i.pos[0]] = 1
+                elif i.color == COLOR[BLACK]:
+                    king_board[i.pos[1]][7-i.pos[0]] = -1
+
+        return np.stack((rook_board, knight_board, bishop_board, queen_board, king_board, pawn_board), axis=-1)
 
     # No Mate - 0, Stalemate - 1, Checkmate - 2
     def check_mates(self,color):
@@ -495,8 +545,6 @@ class Board():
             return 2
         else:
             return 1
-
-
 
 class Game():
     def __init__(self,screen, time, font, color=0, opponent=0):
@@ -513,6 +561,19 @@ class Game():
         self.valid_moves = None
         self.in_check = None
         self.game_state = 0
+        self.model = Model()
+
+    def get_best_move(self, color):
+        moves, boards = self.board.get_all_possible_moves(color)
+
+        scores = self.model.predict_scores(boards)
+        print(scores)
+        if color == COLOR[WHITE]:
+            white_scores = scores[:,2]
+            return moves[np.argmax(white_scores)]
+        elif color == COLOR[BLACK]:
+            black_scores = scores[:, 0]
+            return moves[np.argmin(black_scores)]
 
     def drawStartWindow(self):
         pygame.display.update()
@@ -619,7 +680,7 @@ class Game():
                             if self.board.get_valid(cord,new_cord,self.get_turn()[0]) and moved:
                                 self.board.move_piece(cord,new_cord,real=True)
                                 #print("Future Check: ", self.future_board.get_set_check(self.get_turn()[1]))
-                                self.board.init_valid(self.get_turn()[0], True)
+                                #self.board.init_valid(self.get_turn()[0], True)
                                 self.switch_turn()
                                 self.board.init_valid(self.get_turn()[0], False)
                                 print("Future Check: ", self.board.get_set_check(self.get_turn()[0]))
@@ -631,13 +692,16 @@ class Game():
                         self.drawWindow()
                 else:
                     print("hist",self.board.history)
-                    if len(self.board.history) > 1:
+                    """if len(self.board.history) > 1:
                         stockfish.make_moves_from_current_position(self.board.history[-2:])
                     elif len(self.board.history) > 0:
                         stockfish.make_moves_from_current_position(self.board.history[-1:])
-                    best_move = stockfish.get_best_move()
-                    coord, new_coord = convert_coord_to_pos(best_move, self.user)
-                    self.board.move_piece(coord, new_coord, real=True)
+                    best_move = stockfish.get_best_move()"""
+                    #print("best move 1", best_move)
+                    best_move = self.get_best_move(self.computer)
+                    print("best move 2", best_move)
+                    #coord, new_coord = convert_coord_to_pos(best_move, self.user)
+                    self.board.move_piece(best_move[0], best_move[1], real=True)
                     self.board.init_valid(self.get_turn()[0], True)
                     self.switch_turn()
                     self.board.init_valid(self.get_turn()[0], False)
