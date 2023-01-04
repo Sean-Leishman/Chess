@@ -1,3 +1,8 @@
 # Chess
 
-Run using MAIN.py. Requires pygame module
+## Instructions
+Run `MAIN.py`
+
+## Dependecies
+- pygame
+- tkinter 
