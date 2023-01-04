@@ -12,7 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,9 +274,10 @@
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state x="722" y="90" width="483" height="491" key="#xdebugger.XInspectDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503699428" />
-    <state x="421" y="92" key="FileChooserDialogImpl" timestamp="1665808673691">
-      <screen x="0" y="0" width="1280" height="672" />
+    <state x="2552" y="141" key="FileChooserDialogImpl" timestamp="1669552138702">
+      <screen x="1920" y="0" width="1920" height="1032" />
     </state>
+    <state x="2552" y="141" key="FileChooserDialogImpl/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669552138702" />
     <state x="421" y="92" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1665808673691" />
     <state width="569" height="898" key="GridCell.Tab.0.bottom" timestamp="1669476262672">
       <screen x="1920" y="0" width="1920" height="1032" />
@@ -327,10 +327,10 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2518" y="277" key="MultipleFileMergeDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669305239294" />
-    <state x="2133" y="0" key="SettingsEditor" timestamp="1669386817455">
+    <state x="2133" y="0" key="SettingsEditor" timestamp="1669552243356">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
-    <state x="2133" y="0" key="SettingsEditor/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669386817455" />
+    <state x="2133" y="0" key="SettingsEditor/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669552243356" />
     <state x="142" y="0" key="SettingsEditor/0.0.1280.672@0.0.1280.672" timestamp="1669176919882" />
     <state x="233" y="70" key="Vcs.Push.Dialog.v2" timestamp="1669430945444">
       <screen x="0" y="0" width="1280" height="672" />
