@@ -11,7 +11,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug">
+      <change afterPath="$PROJECT_DIR$/Piece.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/0baeea82f7d0292f34069de8187a18c0--a-goofy-movie-walt-disney-world-vacations.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/0d461771cf41accfffe5793816ac6b28--sticker-lwren-scott.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/14e028a7523d897566a158767477180b--or-nurse-nurse-humor.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/18fdd20417ace01493481ab1b08d7f70.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/2f900cda39422f95e04a28ddd08660a3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/48ac354a7a2d13aa88dc5442d3ead471.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/4b8154a3aefce4b17860b038ca74b7ae.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/4ef8443cd3e08639dda935d54e80e60c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/529f61ed30780e9980016889d2307368.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/5f430b429977f2cb8f4f77ab2b904b7c.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/773c2055b9e6b21368bd90c25a0cd83b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/833cb16470db792146b407e2092dc09a--disney-stitch-be-cool.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/89e93ffc6ca65aa78cbe876ce324e896.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/91850cb9089c1c1a3cc039b351202d3f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/951f8f21be8e106ccd976f2f6131d338.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/95d146454c677b47c0b690a6749c31eb.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/971d1b25941d1d2ca85e2551e3a16059.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BBishop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BCastle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BKing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BKnight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BPawn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/BQueen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/Chess_rlt45 - Copy.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/SPotify 2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/Spotify 1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WBishop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WCastle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WKing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WKnight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WPawn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/WQueen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/af9abb92c33746ab366144f29c9a4689.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/b218a081b15ec17e2f9ebf78e2e268bc.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/ce464d86e1f58ccf5758adc804e37379--spongebob-gifs.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/fc67428f64afb586928d81c323554762.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svgNew.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,20 +72,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1it8o2CyYeF9xtp97fdIZjLYB4A" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/leish/Projects/Python/Chess"
+  }
+}]]></component>
   <component name="RunManager" selected="Python.Controller">
     <configuration name="Controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess" />
@@ -256,7 +300,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -268,82 +311,6 @@
     <MESSAGE value="added en passant functionality" />
     <MESSAGE value="fixed castle check bug" />
     <option name="LAST_COMMIT_MESSAGE" value="fixed castle check bug" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="722" y="90" width="483" height="491" key="#xdebugger.XInspectDialog" timestamp="1665503699428">
-      <screen x="0" y="0" width="1280" height="672" />
-    </state>
-    <state x="722" y="90" width="483" height="491" key="#xdebugger.XInspectDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503699428" />
-    <state x="2552" y="141" key="FileChooserDialogImpl" timestamp="1669552138702">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2552" y="141" key="FileChooserDialogImpl/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669552138702" />
-    <state x="421" y="92" key="FileChooserDialogImpl/0.0.1280.672@0.0.1280.672" timestamp="1665808673691" />
-    <state width="569" height="898" key="GridCell.Tab.0.bottom" timestamp="1669476262672">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="569" height="898" key="GridCell.Tab.0.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669476262672" />
-    <state width="569" height="545" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669451930987" />
-    <state width="569" height="898" key="GridCell.Tab.0.center" timestamp="1669476262671">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="569" height="898" key="GridCell.Tab.0.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669476262671" />
-    <state width="569" height="545" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1669451930986" />
-    <state width="569" height="898" key="GridCell.Tab.0.left" timestamp="1669476262671">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="569" height="898" key="GridCell.Tab.0.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669476262671" />
-    <state width="569" height="545" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1669451930983" />
-    <state width="569" height="898" key="GridCell.Tab.0.right" timestamp="1669476262672">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="569" height="898" key="GridCell.Tab.0.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669476262672" />
-    <state width="569" height="545" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1669451930987" />
-    <state width="511" height="898" key="GridCell.Tab.1.bottom" timestamp="1669475640862">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="511" height="898" key="GridCell.Tab.1.bottom/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669475640862" />
-    <state width="338" height="545" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
-    <state width="511" height="898" key="GridCell.Tab.1.center" timestamp="1669475640862">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="511" height="898" key="GridCell.Tab.1.center/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669475640862" />
-    <state width="338" height="545" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
-    <state width="511" height="898" key="GridCell.Tab.1.left" timestamp="1669475640862">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="511" height="898" key="GridCell.Tab.1.left/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669475640862" />
-    <state width="338" height="545" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1669177862412" />
-    <state width="511" height="898" key="GridCell.Tab.1.right" timestamp="1669475640862">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state width="511" height="898" key="GridCell.Tab.1.right/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669475640862" />
-    <state width="338" height="545" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1669177862414" />
-    <state x="2734" y="69" width="1040" height="584" key="MergeDialog" timestamp="1669305234691">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2734" y="69" width="1040" height="584" key="MergeDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669305234691" />
-    <state x="2518" y="277" key="MultipleFileMergeDialog" timestamp="1669305239294">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2518" y="277" key="MultipleFileMergeDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669305239294" />
-    <state x="2133" y="0" key="SettingsEditor" timestamp="1669552243356">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2133" y="0" key="SettingsEditor/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1669552243356" />
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.672@0.0.1280.672" timestamp="1669176919882" />
-    <state x="233" y="70" key="Vcs.Push.Dialog.v2" timestamp="1669430945444">
-      <screen x="0" y="0" width="1280" height="672" />
-    </state>
-    <state x="233" y="70" key="Vcs.Push.Dialog.v2/0.0.1280.672@0.0.1280.672" timestamp="1669430945444" />
-    <state x="2675" y="250" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1665503439235">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2675" y="250" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1280.672/1920.0.1920.1032@1920.0.1920.1032" timestamp="1665503439235" />
-    <state x="458" y="251" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1665551098744">
-      <screen x="0" y="0" width="1280" height="672" />
-    </state>
-    <state x="458" y="251" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.672@0.0.1280.672" timestamp="1665551098744" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
