@@ -11,51 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug">
-      <change afterPath="$PROJECT_DIR$/Piece.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/0baeea82f7d0292f34069de8187a18c0--a-goofy-movie-walt-disney-world-vacations.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/0d461771cf41accfffe5793816ac6b28--sticker-lwren-scott.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/14e028a7523d897566a158767477180b--or-nurse-nurse-humor.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/18fdd20417ace01493481ab1b08d7f70.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/2f900cda39422f95e04a28ddd08660a3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/48ac354a7a2d13aa88dc5442d3ead471.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/4b8154a3aefce4b17860b038ca74b7ae.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/4ef8443cd3e08639dda935d54e80e60c.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/529f61ed30780e9980016889d2307368.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/5f430b429977f2cb8f4f77ab2b904b7c.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/773c2055b9e6b21368bd90c25a0cd83b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/833cb16470db792146b407e2092dc09a--disney-stitch-be-cool.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/89e93ffc6ca65aa78cbe876ce324e896.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/91850cb9089c1c1a3cc039b351202d3f.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/951f8f21be8e106ccd976f2f6131d338.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/95d146454c677b47c0b690a6749c31eb.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/971d1b25941d1d2ca85e2551e3a16059.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BBishop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BCastle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BKing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BKnight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BPawn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/BQueen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Chess_rlt45 - Copy.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/SPotify 2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Spotify 1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WBishop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WCastle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WKing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WKnight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WPawn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/WQueen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/af9abb92c33746ab366144f29c9a4689.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/b218a081b15ec17e2f9ebf78e2e268bc.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/ce464d86e1f58ccf5758adc804e37379--spongebob-gifs.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/fc67428f64afb586928d81c323554762.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgNew.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +37,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "C:/Users/leish/Projects/Python/Chess"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/leish/Projects/Python/Solitaire&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.Controller">
     <configuration name="Controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess" />
