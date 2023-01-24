@@ -10,9 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +37,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/leish/Projects/Python/Solitaire&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/leish/Projects/Othello&quot;
   }
 }</component>
   <component name="RunManager" selected="Python.Controller">

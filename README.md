@@ -2,7 +2,7 @@
 Implementation of chess using the pygame module.
 Contains the ability to restart and to play games either PvP or against a Computer. 
 This model was built personally and can 
-be found at this [repository].
+be found at this [repository](https://github.com/Sean-Leishman/Chess-Model)
 
 ![Screenshot of chess program!](https://github.com/Sean-Leishman/Chess/blob/master/docs/assets/chess.png?raw=true "Chess")
 
