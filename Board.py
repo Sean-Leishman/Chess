@@ -172,9 +172,9 @@ class Board():
                     if real:
                         if (isinstance(i, Pawn)):
                             i.define_moves()
-                        if i.get_pos()[1] % 7 == 0:
-                            self.pieces.remove(i)
-                            self.pieces.append(Queen(i.color, i.pos, False))
+                            if i.get_pos()[1] % 7 == 0:
+                                self.pieces.remove(i)
+                                self.pieces.append(Queen(i.color, i.pos, False))
 
                         move = convert_pos_to_coord(pos,self.user) + convert_pos_to_coord(new_pos, self.user)
                         print("Move here ", move)
@@ -237,19 +237,20 @@ class Board():
                     pos = i.pos[:]
                     new_pos = j[:]
                     moved, piece = self.move_piece(pos, new_pos, False)
-                    possible_boards.append(self.convert_board_to_model_format())
+                    possible_boards.append(self.convert_board_to_model_format(color))
                     possible_moves.append([pos, new_pos])
                     self.reverse_move(new_pos, pos, piece)
 
         return possible_moves, np.array(possible_boards)
 
-    def convert_board_to_model_format(self):
+    def convert_board_to_model_format(self, color):
         pawn_board = np.zeros((8, 8))
         rook_board = np.zeros((8, 8))
         bishop_board = np.zeros((8, 8))
         knight_board = np.zeros((8, 8))
         queen_board = np.zeros((8, 8))
         king_board = np.zeros((8, 8))
+        color_board = np.zeros((8,8))
 
         for i in self.pieces:
             if isinstance(i, Pawn):
@@ -285,8 +286,12 @@ class Board():
                     king_board[i.pos[1]][7-i.pos[0]] = 1
                 elif i.color == COLOR[BLACK]:
                     king_board[i.pos[1]][7-i.pos[0]] = -1
+        if color == COLOR[WHITE]:
+            color_board.fill(1)
+        else:
+            color_board.fill(-1)
 
-        return np.stack((rook_board, knight_board, bishop_board, queen_board, king_board, pawn_board), axis=-1)
+        return np.stack((rook_board, knight_board, bishop_board, queen_board, king_board, pawn_board, color_board), axis=-1)
 
     # No Mate - 0, Stalemate - 1, Checkmate - 2
     def check_mates(self,color):
@@ -294,6 +299,7 @@ class Board():
             if i.color[0] == color:
                 if len(i.valid_moves) > 0:
                     return 0
+        self.get_set_check(color)
         if self.in_check[color]:
             return 2
         else:

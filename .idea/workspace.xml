@@ -10,7 +10,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug" />
+    <list default="true" id="fc197401-544a-426e-bf28-fdedf4ac887f" name="Default Changelist" comment="fixed castle check bug">
+      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Board.py" beforeDir="false" afterPath="$PROJECT_DIR$/Board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/keras_metadata.pb" beforeDir="false" afterPath="$PROJECT_DIR$/model/keras_metadata.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/saved_model.pb" beforeDir="false" afterPath="$PROJECT_DIR$/model/saved_model.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/variables/variables.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/model/variables/variables.data-00000-of-00001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/variables/variables.index" beforeDir="false" afterPath="$PROJECT_DIR$/model/variables/variables.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svgNew.svg" beforeDir="false" afterPath="$PROJECT_DIR$/svgNew.svg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,11 +44,9 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/leish/Projects/Othello&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RunManager" selected="Python.Controller">
     <configuration name="Controller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Chess" />
@@ -254,6 +261,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -265,6 +273,40 @@
     <MESSAGE value="added en passant functionality" />
     <MESSAGE value="fixed castle check bug" />
     <option name="LAST_COMMIT_MESSAGE" value="fixed castle check bug" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="375" height="545" key="GridCell.Tab.0.bottom" timestamp="1675051867751">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="375" height="545" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1675051867751" />
+    <state width="375" height="545" key="GridCell.Tab.0.center" timestamp="1675051867751">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="375" height="545" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1675051867751" />
+    <state width="375" height="545" key="GridCell.Tab.0.left" timestamp="1675051867751">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="375" height="545" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1675051867751" />
+    <state width="375" height="545" key="GridCell.Tab.0.right" timestamp="1675051867751">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="375" height="545" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1675051867751" />
+    <state width="337" height="545" key="GridCell.Tab.1.bottom" timestamp="1675051336316">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="337" height="545" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1675051336316" />
+    <state width="337" height="545" key="GridCell.Tab.1.center" timestamp="1675051336316">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="337" height="545" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1675051336316" />
+    <state width="337" height="545" key="GridCell.Tab.1.left" timestamp="1675051336316">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="337" height="545" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1675051336316" />
+    <state width="337" height="545" key="GridCell.Tab.1.right" timestamp="1675051336316">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="337" height="545" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1675051336316" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
